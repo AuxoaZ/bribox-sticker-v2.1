@@ -1,4 +1,4 @@
-import { Button, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle, DarkThemeToggle, TextInput, Label, Tooltip, Textarea, Spinner } from "flowbite-react";
+import { Button, Navbar, NavbarBrand, NavbarCollapse, NavbarToggle, DarkThemeToggle, TextInput, Label, Tooltip, Textarea, Spinner } from "flowbite-react";
 import { useState, useRef } from "react";
 import generatePDF from 'react-to-pdf';
 import { CloudDownload, Info, SquareCheckBig, Trash2 } from "lucide-react";
