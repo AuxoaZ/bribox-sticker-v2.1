@@ -71,10 +71,10 @@ export function App() {
     generatePDF(targetRef, {
       filename: `Sticker ${uker}.pdf`,
       page: {
-        margin: { top: 0, bottom: 9, left: 0, right: 0 }
+        margin: { top: 0, bottom: 9.4, left: 0, right: 0 }
       }
     })
-      .then((pdf) => {
+      .then((pdf) => {  
         pdf.save(`${uker}.pdf`);
         setLoading(false); // Set loading ke false setelah proses selesai
       })
