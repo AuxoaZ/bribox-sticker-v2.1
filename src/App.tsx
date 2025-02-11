@@ -65,7 +65,7 @@ export function App() {
                 const emptyRow = table.insertRow(rowIndex);
                 const emptyCell = emptyRow.insertCell(0);
                 // emptyCell.colSpan = 4; // Biar space kosong lebar
-                emptyCell.innerHTML = `<div style="height: 53px; border:none"></div>`; // Bisa diubah ke CSS padding/margin
+                emptyCell.innerHTML = `<div style="height: 55px; border:none"></div>`; // Bisa diubah ke CSS padding/margin
                 rowIndex++; // Pindah ke baris baru
             }
         });
