@@ -3,6 +3,8 @@ import { useState, useRef } from "react";
 import generatePDF from 'react-to-pdf';
 import { CloudDownload, Info, SquareCheckBig, Trash2 } from "lucide-react";
 import logo from "../public/img/bribox.png";
+import bit from "../public/img/bit-logo.png";
+
 
 export function App() {
   const [uker, setUker] = useState<string>('');
@@ -43,7 +45,7 @@ export function App() {
                         <img src="${qrcode}" alt="QR Code" width="80px" crossOrigin="anonymous" />
                     </div>
                     <div class="py-2 px-5 text-center">
-                        <img crossOrigin="anonymous" src="https://i.postimg.cc/sD7SJCdW/bit-logo.png" alt="Logo" width="120px" class="ml-2" />
+                        <img  src=${bit} alt="Logo" width="120px" class="ml-2" />
                         <p class="text-xs">081222006261</p>
                         <p class="text-xs">bribox.zona2@corp.bri.co.id</p>
                         <p class="text-xs">2022</p>
