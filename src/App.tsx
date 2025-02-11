@@ -20,45 +20,62 @@ export function App() {
     let rowIndex = 0;
     let colIndex = 0;
     
-    if (data.length > 0 && asset.trim()){
-      setShow(true)
-      data.forEach((element) => {
-        let row;
-        if (table.rows[rowIndex]) {
-          row = table.rows[rowIndex];
-        } else {
-          row = table.insertRow(rowIndex);
-        }
+    if (data.length > 0 && asset.trim()) {
+        setShow(true);
 
-        const cell = row.insertCell(colIndex);
-        const qrcode = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${element}`;
+        data.forEach((element) => {
+            let row;
 
-        cell.innerHTML = `
-          <div class="bg-white flex flex-row justify-between">
-            <div class="py-4 px-5 flex justify-center">
-              <img src="${qrcode}" alt="QR Code" width="80px" crossOrigin="anonymous" />
-            </div>
-            <div class="py-2 px-5 text-center">
-              <img crossOrigin="anonymous" src="https://i.postimg.cc/sD7SJCdW/bit-logo.png" alt="Logo" width="120px" class="ml-2" />
-              <p class="text-xs">081222006261</p>
-              <p class="text-xs">bribox.zona2@corp.bri.co.id</p>
-              <p class="text-xs">2022</p>
-              <p class="text-xs">${element}</p>
-            </div>
-          </div>`;
+            // Cek apakah row sudah ada atau perlu dibuat
+            if (table.rows[rowIndex]) {
+                row = table.rows[rowIndex];
+            } else {
+                row = table.insertRow(rowIndex);
+            }
 
-        colIndex++;
-        if (colIndex === 4) {
-          rowIndex++;
-          colIndex = 0;
-        }
-      });
+            // Tambahkan sel di kolom yang sesuai
+            const cell = row.insertCell(colIndex);
+            const qrcode = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${element}`;
 
-    setTotalRows(table.rows.length)
-    }else{
-      alert("Isi dulu cuy!")
+            cell.innerHTML = `
+                <div class="bg-white flex flex-row justify-between">
+                    <div class="py-4 px-5 flex justify-center">
+                        <img src="${qrcode}" alt="QR Code" width="80px" crossOrigin="anonymous" />
+                    </div>
+                    <div class="py-2 px-5 text-center">
+                        <img crossOrigin="anonymous" src="https://i.postimg.cc/sD7SJCdW/bit-logo.png" alt="Logo" width="120px" class="ml-2" />
+                        <p class="text-xs">081222006261</p>
+                        <p class="text-xs">bribox.zona2@corp.bri.co.id</p>
+                        <p class="text-xs">2022</p>
+                        <p class="text-xs">${element}</p>
+                    </div>
+                </div>`;
+
+            // Pindah ke kolom berikutnya
+            colIndex++;
+
+            // Jika kolom sudah mencapai 4, pindah ke baris berikutnya
+            if (colIndex === 4) {
+                rowIndex++;
+                colIndex = 0;
+            }
+
+            // **Tambahkan baris kosong setelah setiap 15 baris**
+            if (rowIndex > 0 && rowIndex % 15 === 0 && colIndex === 0) {
+                const emptyRow = table.insertRow(rowIndex);
+                const emptyCell = emptyRow.insertCell(0);
+                // emptyCell.colSpan = 4; // Biar space kosong lebar
+                emptyCell.innerHTML = `<div style="height: 53px; border:none"></div>`; // Bisa diubah ke CSS padding/margin
+                rowIndex++; // Pindah ke baris baru
+            }
+        });
+
+        setTotalRows(table.rows.length);
+    } else {
+        alert("Isi dulu cuy!");
     }
-  };
+};
+
 
   const handleReset = () => {
     window.location.reload();
@@ -69,13 +86,12 @@ export function App() {
     if (asset.split('\n').length > 0 && asset.trim()){
     setLoading(true); // Set loading ke true saat proses dimulai
     generatePDF(targetRef, {
-      filename: `Sticker ${uker}.pdf`,
+          filename: `Sticker ${uker}.pdf`,
       page: {
-        margin: { top: 0, bottom: 9.4, left: 0, right: 0 }
+        margin: { top: 0, bottom: 0, left: 0, right: 0 }
       }
     })
-      .then((pdf) => {  
-        pdf.save(`${uker}.pdf`);
+      .then(() => {  
         setLoading(false); // Set loading ke false setelah proses selesai
       })
       .catch((error) => {
