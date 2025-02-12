@@ -23,21 +23,28 @@ export function App() {
     const table = document.getElementById("myTable") as HTMLTableElement;
     let rowIndex = 0;
     let colIndex = 0;
-    
+    let dataCounter = 0; // Menghitung hanya baris yang berisi data
+
     if (data.length > 0 && asset.trim()) {
         setShow(true);
 
         data.forEach((element) => {
-            let row;
+            // Tambahkan baris kosong setelah 15 baris data
+            if (dataCounter > 0 && dataCounter % 15 === 0 && colIndex === 0) {
+                const emptyRow = table.insertRow(rowIndex++);
+                const emptyCell = emptyRow.insertCell(0);
+                emptyCell.colSpan = 4;
+                emptyCell.innerHTML = `<div style="height: 55px; background: transparent; border: none;"></div>`;
+            }
 
-            // Cek apakah row sudah ada atau perlu dibuat
+            // Menambahkan data ke dalam tabel
+            let row;
             if (table.rows[rowIndex]) {
                 row = table.rows[rowIndex];
             } else {
                 row = table.insertRow(rowIndex);
             }
 
-            // Tambahkan sel di kolom yang sesuai
             const cell = row.insertCell(colIndex);
             const qrcode = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${element}`;
 
@@ -47,7 +54,7 @@ export function App() {
                         <img src="${qrcode}" alt="QR Code" width="80px" crossOrigin="anonymous" />
                     </div>
                     <div class="py-2 px-5 text-center">
-                        <img  src=${bit} alt="Logo" width="120px" class="ml-2" />
+                        <img src=${bit} alt="Logo" width="120px" class="ml-2" />
                         <p class="text-xs">081222006261</p>
                         <p class="text-xs">bribox.zona2@corp.bri.co.id</p>
                         <p class="text-xs">${getCurrentYear()}</p>
@@ -55,22 +62,11 @@ export function App() {
                     </div>
                 </div>`;
 
-            // Pindah ke kolom berikutnya
             colIndex++;
-
-            // Jika kolom sudah mencapai 4, pindah ke baris berikutnya
             if (colIndex === 4) {
                 rowIndex++;
                 colIndex = 0;
-            }
-
-            // **Tambahkan baris kosong setelah setiap 15 baris**
-            if (rowIndex > 0 && rowIndex % 15 === 0 && colIndex === 0) {
-                const emptyRow = table.insertRow(rowIndex);
-                const emptyCell = emptyRow.insertCell(0);
-                // emptyCell.colSpan = 4; // Biar space kosong lebar
-                emptyCell.innerHTML = `<div style="height: 55px; border:none"></div>`; // Bisa diubah ke CSS padding/margin
-                rowIndex++; // Pindah ke baris baru
+                dataCounter++; // Hanya naik jika satu baris penuh (4 kolom)
             }
         });
 
@@ -79,6 +75,8 @@ export function App() {
         alert("Isi dulu cuy!");
     }
 };
+
+
 
 
   const handleReset = () => {
