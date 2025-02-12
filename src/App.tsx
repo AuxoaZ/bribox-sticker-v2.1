@@ -12,9 +12,11 @@ export function App() {
   const [loading, setLoading] = useState<boolean>(false); // State untuk loading
   const [show, setShow] = useState<boolean>(false)
   const [totalRows, setTotalRows] = useState<number>(0)
-
-
   const targetRef = useRef<HTMLTableElement>(null);
+
+  const getCurrentYear = () => new Date().getFullYear();
+
+  
 
   const handlePrint = () => {
     const data = asset.split('\n');
@@ -48,7 +50,7 @@ export function App() {
                         <img  src=${bit} alt="Logo" width="120px" class="ml-2" />
                         <p class="text-xs">081222006261</p>
                         <p class="text-xs">bribox.zona2@corp.bri.co.id</p>
-                        <p class="text-xs">2022</p>
+                        <p class="text-xs">${getCurrentYear()}</p>
                         <p class="text-xs">${element}</p>
                     </div>
                 </div>`;
